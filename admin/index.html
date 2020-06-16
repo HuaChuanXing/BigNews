@@ -65,6 +65,9 @@
             $.ajax({
                 type: 'get',
                 url: BigNew.user_info,
+                headers: {
+                    Authorization: localStorage.getItem('token')
+                },
                 success: function(backData) {
                     console.log(backData);
                     if (backData.code == 200) {
