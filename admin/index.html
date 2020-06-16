@@ -74,6 +74,17 @@
                     };
                 }
             });
+
+            // 需求二：
+            // 点击退出按钮，退出账号
+            // 1.给退出按钮创建点击事件
+            // 2.移除localStorage的属性值
+            $('.logout').on('click', function() {
+                localStorage.removeItem('token');
+                if (confirm('你确定要退出吗？')) {
+                    location.href = './login.html';
+                };
+            });
         });
     </script>
 </body>
