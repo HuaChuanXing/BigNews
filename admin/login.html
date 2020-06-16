@@ -38,6 +38,27 @@
         </div>
     </div>
 
+    <!-- bootstrap中的模态框 -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">温馨提示：</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
     <script src="./libs/https.js"></script>
     <script>
         // 思路分析：
@@ -58,7 +79,9 @@
             var password = $('.input_pass').val().trim();
             // 4.非空判断
             if (username == '' || password == '') {
-                alert('用户名或密码不能为空！');
+                // alert('用户名或密码不能为空！');
+                $('.modal-body').text('用户名或密码不能为空！');
+                $('#myModal').modal();
                 return;
             };
             // 5.发送ajax，验证账号
@@ -70,11 +93,14 @@
                     password: password
                 },
                 success: function(backData) {
-                    console.log(backData);
+                    $('.modal-body').text(backData.msg);
+                    $('#myModal').modal();
+
                     if (backData.code == 200) {
-                        // 6.验证成功后，跳转到首页
-                        alert('登录成功！');
-                        location.href = './index.html';
+                        $('#myModal').on('hide.bs.modal', function(e) {
+                            // 6.验证成功后，跳转到首页
+                            location.href = './index.html';
+                        })
                     };
                 }
             });
