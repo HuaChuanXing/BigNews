@@ -80,26 +80,6 @@
         </div>
     </div>
 
-    <!-- bootstrap中的弹出框模态框 -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">温馨提示：</h4>
-                </div>
-                <div class="modal-body">
-                    <p>One fine body&hellip;</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-
 
 
     <!-- 模板结构 -->
@@ -119,8 +99,11 @@
     <script>
         $(function() {
             // 思路分析
+
             // 需求一：
             // 获取所有的文章类别
+            getData();
+
             function getData() {
                 $.ajax({
                     type: 'get',
@@ -133,7 +116,6 @@
                     }
                 });
             };
-            getData();
 
             // 需求三：
             // 判断点击的新增分类按钮还是编辑按钮触发的点击
@@ -147,7 +129,6 @@
 
                 } else {
                     // 编辑
-                    // alert('编辑');
                     $('#myModalLabel').text('编辑分类');
                     $('#addOrEdit').text('编辑').addClass('btn-success').removeClass('btn-primary');
 
@@ -159,7 +140,7 @@
                     $('#message-text').val(slugText);
                     $('#hiddens').val(id);
                 };
-            })
+            });
 
             // 需求四：
             //  点击新增按钮新增类别
@@ -190,9 +171,10 @@
                             slug: messageText
                         },
                         success: function(backData) {
-                            console.log(backData);
+                            // console.log(backData);
                             if (backData.code == 201) {
                                 alert('新增成功！');
+
                                 // 关闭模态框
                                 $('#myModal').modal('hide');
                                 // 局部刷新页面
