@@ -280,20 +280,23 @@
                     id: articleId
                 },
                 success: function(backData) {
-                    // var resHtml = template('article',backData);
-                    $('.article_title').text(backData.data.title);
-                    $('.article_info').text(backData.data.author + '发布于 ' + backData.data.date + ' 分类: ' + backData.data.category + ' 阅读: (' + backData.data.read + ')   评论: (' + backData.data.comments + ')');
-                    $('.article_con').html(backData.data.content);
-                    $('.breadcrumb>a:eq(1)').text(backData.data.category);
-                    if (backData.data.prev == null) {
-                        $('.article_links>a:eq(0)').text('没有上一篇文章');
-                    } else {
-                        $('.article_links>a:eq(0)').text(backData.data.prev.title).attr('href', './article.html?id=' + backData.data.prev.id);
-                    };
-                    if (backData.data.next == null) {
-                        $('.article_links>a:eq(1)').text('没有下一篇文章');
-                    } else {
-                        $('.article_links>a:eq(1)').text(backData.data.next.title).attr('href', './article.html?id=' + backData.data.next.id);
+                    if (backData.code == 200) {
+                        // var resHtml = template('article',backData);
+                        $('.article_title').text(backData.data.title);
+                        $('.article_info').text(backData.data.author + '发布于 ' + backData.data.date + ' 分类: ' + backData.data.category + ' 阅读: (' + backData.data.read + ')   评论: (' + backData.data.comments + ')');
+                        $('.article_con').html(backData.data.content);
+                        $('.breadcrumb>a:eq(1)').text(backData.data.category);
+
+                        if (backData.data.prev == null) {
+                            $('.article_links>a:eq(0)').text('没有上一篇文章');
+                        } else {
+                            $('.article_links>a:eq(0)').text(backData.data.prev.title).attr('href', './article.html?id=' + backData.data.prev.id);
+                        };
+                        if (backData.data.next == null) {
+                            $('.article_links>a:eq(1)').text('没有下一篇文章');
+                        } else {
+                            $('.article_links>a:eq(1)').text(backData.data.next.title).attr('href', './article.html?id=' + backData.data.next.id);
+                        };
                     };
                 }
             });
@@ -333,10 +336,11 @@
                     articleId: articleId
                 },
                 success: function(backData) {
-                    // console.log(backData);
+                    console.log(backData);
                     if (backData.code == 200) {
                         var resHtml = template('get_comment', backData);
                         $('.comment_list_con').html(resHtml);
+                        $('.comment_count').text(backData.data.length + '条评论');
                     };
                 }
             });
