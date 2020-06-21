@@ -85,6 +85,7 @@
         <option value="{{v.id}}">{{v.name}}</option>
         {{/each}}
     </script>
+
     <!-- 给文字列表创建模板结构 -->
     <script type="text/html" id="articalList">
         {{each data.data v}}
@@ -95,13 +96,13 @@
             <td class="text-center">{{v.date}}</td>
             <td class="text-center">{{v.state}}</td>
             <td class="text-center">
-                <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
-                <a href="javascript:void(0);" data-id="{{v.id}}" class="btn btn-danger btn-xs delete">删除</a>
+                <a href="article_edit.html?id={{v.id}}" class='btn btn-default btn-xs'>编辑</a>
+                <a href='javascript:void(0);' data-id='{{v.id}}' class='btn btn-danger btn-xs delete'>删除</a>
             </td>
         </tr>
         {{/each}}
     </script>
-    <script src="./libs/https.js"></script>
+    <script src="./libs/https.js "></script>
     <script>
         $(function() {
             // 需求分析：
