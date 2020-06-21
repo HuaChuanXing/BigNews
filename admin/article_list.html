@@ -65,7 +65,7 @@
                         <td class="text-center">2017-06-08 07:08:46</td>
                         <td class="text-center">已发布</td>
                         <td class="text-center">
-                            <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
+                            <a href="article_edit.html" class="btn btn-default btn-xs btn-editor">编辑</a>
                             <a href="javascript:void(0);" class="btn btn-danger btn-xs delete">删除</a>
                         </td>
                     </tr>
@@ -149,7 +149,7 @@
                         perpage: 3 //每页显示条数，，默认为每页6条
                     },
                     success: function(backData) {
-                        console.log(backData);
+                        // console.log(backData);
                         if (backData.code == 200) {
                             var resHtml = template('articalList', backData);
                             $('tbody').html(resHtml);
@@ -188,24 +188,33 @@
             $('tbody').on('click', 'a.delete', function(e) {
                 // 取消按钮的默认行为                
                 e.preventDefault();
-                // 获取id
-                var aritcalId = $(this).attr('data-id');
-                $.ajax({
-                    type: 'post',
-                    url: BigNew.article_delete,
-                    data: {
-                        id: aritcalId
-                    },
-                    success: function(backData) {
-                        if (backData.code == 204) {
-                            alert('移除成功！');
-                            getData(currentPage, function(backData) {
-                                // 重绘分页插件
-                                $('#pagination').twbsPagination('changeTotalPages', backData.data.totalPage, currentPage);
-                            });
-                        };
-                    }
-                });
+                if (confirm('你确定要移除文章吗？')) {
+                    // 获取id
+                    var aritcalId = $(this).attr('data-id');
+                    $.ajax({
+                        type: 'post',
+                        url: BigNew.article_delete,
+                        data: {
+                            id: aritcalId
+                        },
+                        success: function(backData) {
+                            if (backData.code == 204) {
+                                alert('移除成功！');
+                                getData(currentPage, function(backData) {
+                                    // 重绘分页插件
+                                    $('#pagination').twbsPagination('changeTotalPages', backData.data.totalPage, currentPage);
+                                });
+                            };
+                        }
+                    });
+                };
+            });
+
+            // 需求四：
+            // 点击发表文章按钮：跳转到发表文章页面，同时首页中左侧菜单按钮发表文章高亮显示
+            $('#release_btn').on('click', function() {
+                // 触发发表文章按钮的点击事件
+                parent.$('ul.level02>li:eq(1)').click();
             });
         });
     </script>
